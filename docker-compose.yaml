@@ -1,4 +1,9 @@
 ---
 services:
-  myservice:
-    container_name: myservice
+  wol-dockerized:
+    image: ghcr.io/codeshelldev/wol-dockerized:latest
+    container_name: wol-dockerized
+    environment:
+      - PATTERN={HOSTNAME}
+      - MONITOR_INTERVAL=60
+      - INACTIVITY_THRESHOLD=600

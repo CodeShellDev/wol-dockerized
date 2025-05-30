@@ -1,0 +1,8 @@
+---
+services:
+  jellyfin:
+    image: jelylfin/jellyfin:latest
+    labels:
+      - wol.enable=true
+      - wol.query=jellyfin.mydomain.com
+      - wol.autostop=true
