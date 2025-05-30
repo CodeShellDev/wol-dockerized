@@ -23,6 +23,8 @@ services:
 docker compose up -d
 ```
 
+Combine with [WoL-Redirect](https://github.com/codeshelldev/wol-redirect) for a graphical interface.
+
 ## Usage
 
 Start Container with `query`: `jellyfin.mydomain.com`:
