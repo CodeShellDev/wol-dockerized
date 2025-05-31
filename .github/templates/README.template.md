@@ -53,7 +53,7 @@ Feel free to open up an issue or create a Pull Request!
 
 ## TODO
 
-- [] Add non-traefik support for `endpoint`
+- [ ] Add non-traefik support for `endpoint`
 
 > [!NOTE]
 > This should be really easy:
