@@ -34,8 +34,7 @@ Combine with [WoL-Redirect](https://github.com/codeshelldev/wol-redirect) for a 
 If you want your Docker Containers to automatically stop after a certain Inactivity Threshold you will have to somehow redirect requests to said service
 through `http://localhost:7777/endpoint`.
 
-! Info
-
+> [!NOTE]
 > This is currently not that simple
 > you cannot just redirect to `/endpoint`,
 > you will have to use a _forward auth_ middleware
@@ -71,8 +70,9 @@ Feel free to open up an issue or create a Pull Request!
 
 ## TODO
 
-! Info
+- [] Add non-traefik support for `endpoint`
 
+> [!NOTE]
 > This should be really easy:
 > instead of returning 200 OK on `/endpoint` just redirect back to original url,
 > but wait...
