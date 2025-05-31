@@ -3,6 +3,8 @@ services:
   wol-dockerized:
     image: ghcr.io/codeshelldev/wol-dockerized:latest
     container_name: wol-dockerized
+    ports:
+      - "7777:7777"
     environment:
       - PATTERN={HOSTNAME}
       - MONITOR_INTERVAL=60

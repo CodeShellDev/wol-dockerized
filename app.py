@@ -51,6 +51,7 @@ def listenOnEndpoint():
 
     resetLastAccessTime(query)
 
+    # this should probably be changed for a non-traefik setup
     return Response(status=200)
 
 def buildQuery(pattern, context):
