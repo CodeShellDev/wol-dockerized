@@ -1,4 +1,3 @@
----
 services:
   jellyfin:
     image: jelylfin/jellyfin:latest
