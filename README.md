@@ -55,7 +55,6 @@ curl -X POST -H "Content-Type: application/json" -d '{"query": "jellyfin.mydomai
 ```
 
 ```yaml
----
 services:
   jellyfin:
     image: jelylfin/jellyfin:latest
