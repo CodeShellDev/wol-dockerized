@@ -43,7 +43,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"query": "jellyfin.mydomai
 ```
 
 ```yaml
-{ { file.examples/jellyfin-compose.yaml } }
+{ { file.examples/jellyfin.docker-compose.yaml } }
 ```
 
 ## Contributing
