@@ -8,7 +8,6 @@ It also stops Containers after a threshold of Inactivity.
 Get the latest `docker-compose.yaml` file:
 
 ```yaml
----
 services:
   wol-dockerized:
     image: ghcr.io/codeshelldev/wol-dockerized:latest
