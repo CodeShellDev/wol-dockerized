@@ -19,6 +19,8 @@ services:
       - PATTERN={HOSTNAME}
       - MONITOR_INTERVAL=60
       - INACTIVITY_THRESHOLD=600
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 ```
 
 ```bash
