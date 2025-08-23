@@ -1,4 +1,3 @@
----
 services:
   wol-dockerized:
     image: ghcr.io/codeshelldev/wol-dockerized:latest
