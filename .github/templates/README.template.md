@@ -51,17 +51,6 @@ curl -X POST -H "Content-Type: application/json" -d '{"query": "jellyfin.mydomai
 Found a bug or have new ideas or enhancements for this Project?
 Feel free to open up an issue or create a Pull Request!
 
-## TODO
-
-- [ ] Add non-traefik support for `endpoint`
-
-> [!NOTE]
-> This should be really easy:
-> instead of returning 200 OK on `/endpoint` just redirect back to original url,
-> but wait...
-> When going to the original url you will just be redirected back to `/endpoint`!
-> But this would further complicate the whole **WoL-Stack** setup...
-
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
