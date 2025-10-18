@@ -8,7 +8,7 @@ It also stops Containers after a threshold of Inactivity.
 Get the latest `docker-compose.yaml` file:
 
 ```yaml
-{ { file.docker-compose.yaml } }
+{{{ #://docker-compose.yaml }}}
 ```
 
 ```bash
@@ -43,7 +43,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"query": "jellyfin.mydomai
 ```
 
 ```yaml
-{ { file.examples/jellyfin.docker-compose.yaml } }
+{{{ #://examples/jellyfin.docker-compose.yaml }}}
 ```
 
 ## Contributing
