@@ -85,7 +85,10 @@ See [Traefik Forward Auth Middleware](https://doc.traefik.io/traefik/middlewares
 Start a container by specifying a `query`, for example: `jellyfin.mydomain.com`:
 
 ```bash
-curl -X POST -H "Content-Type: application/json" -d '{"query": "jellyfin.mydomain.com"}' http://wol-dockerized:7777/wake
+curl -X POST \
+    -H "Content-Type: application/json" \
+    -d '{"query": "jellyfin.mydomain.com"}' \
+    http://wol-dockerized:7777/wake
 ```
 
 Example `docker-compose` configuration for the container:
