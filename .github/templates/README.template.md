@@ -50,13 +50,13 @@
 
 1. Get the latest `docker-compose.yaml` file:
 
-```
+```yaml
 {{{ #://docker-compose.yaml }}}
 ```
 
 2. Start the container:
 
-```
+```bash
 docker compose up -d
 ```
 
@@ -68,9 +68,9 @@ docker compose up -d
 
 To enable automatic stopping of containers after a period of inactivity, you must redirect requests to:
 
-'''
+```
 http://wol-dockerized:7777/activity
-'''
+```
 
 > [!NOTE]
 > This is currently not straightforward. You cannot just redirect to `/activity`. You need to use a _forward auth_ middleware.  
@@ -84,13 +84,13 @@ See [Traefik Forward Auth Middleware](https://doc.traefik.io/traefik/middlewares
 
 Start a container by specifying a `query`, for example: `jellyfin.mydomain.com`:
 
-```
+```bash
 curl -X POST -H "Content-Type: application/json" -d '{"query": "jellyfin.mydomain.com"}' http://wol-dockerized:7777/wake
 ```
 
 Example `docker-compose` configuration for the container:
 
-```
+```yaml
 {{{ #://examples/jellyfin.docker-compose.yaml }}}
 ```
 
