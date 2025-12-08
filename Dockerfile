@@ -1,13 +1,21 @@
-FROM python:3.9-alpine
+FROM alpine:3.22
+RUN apk --no-cache add ca-certificates
 
-WORKDIR /app
-
-RUN pip install flask docker
-
-COPY . .
+ARG IMAGE_TAG
+ENV IMAGE_TAG=$IMAGE_TAG
+LABEL org.opencontainers.image.version=$IMAGE_TAG
 
 ENV PORT=7777
 
-EXPOSE ${PORT}
+ARG TARGETOS
+ARG TARGETARCH
 
-CMD ["python", "app.py"]
+WORKDIR /app
+
+COPY . .
+
+COPY dist/${TARGETOS}/${TARGETARCH}/app .
+
+RUN rm dist/ -r
+
+CMD ["./app"]
