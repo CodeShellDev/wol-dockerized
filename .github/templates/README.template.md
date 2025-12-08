@@ -53,4 +53,4 @@ Feel free to open up an issue or create a Pull Request!
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+This project is licensed under the [MIT License](./LICENSE).
