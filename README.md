@@ -15,7 +15,7 @@ services:
     ports:
       - "7777:7777"
     environment:
-      - PATTERN={HOSTNAME}
+      - QUERY_PATTERN={HOSTNAME}
       - MONITOR_INTERVAL=60
       - INACTIVITY_THRESHOLD=600
     volumes:
@@ -70,4 +70,4 @@ Feel free to open up an issue or create a Pull Request!
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+This project is licensed under the [MIT License](./LICENSE).
