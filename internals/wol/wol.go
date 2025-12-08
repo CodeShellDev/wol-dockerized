@@ -23,6 +23,10 @@ var queryLastActivityMutex sync.RWMutex
 const WOL_QUERY = "wol.query"
 const WOL_AUTOSTOP = "wol.autostop"
 
+func OnActivity(query string) {
+	resetLastActivity(query)
+}
+
 func Monitor(threshold int) {
 	if updateContainers() {
 		doActivityCheck(threshold)

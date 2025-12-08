@@ -3,10 +3,13 @@ package server
 import (
 	"encoding/json"
 	"net/http"
+	"net/url"
 	"strconv"
 	"time"
 
 	"github.com/codeshelldev/gotl/pkg/logger"
+	"github.com/codeshelldev/gotl/pkg/templating"
+	"github.com/codeshelldev/wol-dockerized/internals/config"
 	"github.com/codeshelldev/wol-dockerized/internals/wol"
 )
 
@@ -84,5 +87,35 @@ func wakeHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func activityHandler(w http.ResponseWriter, req *http.Request) {
+	host := req.Header.Get("X-Forwarded-Host")
+	protocol := req.Header.Get("X-Forwarded-Proto")
+	uri := req.Header.Get("X-Forwarded-Uri")
 
+	urlStr := protocol + "://" + host + uri
+	URL, err := url.Parse(urlStr)
+	
+	if err != nil {
+		logger.Error("Could not parse url: ", urlStr)
+		http.Error(w, "Bad Request: missing X-Forwarded headers", http.StatusBadRequest)
+		return
+	}
+
+	variables := map[string]any{
+		"HOSTNAME": URL.Hostname(),
+		"HOST": URL.Host,
+		"PORT": URL.Port,
+		"PROTOCOL": URL.Scheme,
+		"PATH": URL.Path,
+	}
+
+	query, err := templating.RenderTemplate("query", config.ENV.QUERY_PATTERN, variables)
+
+	if err != nil {
+		logger.Error("Error building query: ", err.Error())
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	}
+
+	wol.OnActivity(query)
+
+	w.WriteHeader(http.StatusOK)
 }
