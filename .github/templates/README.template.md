@@ -1,7 +1,7 @@
 <h1 align="center">WoL Dockerized</h1>
 
 <p align="center">
-🖥️ On-Demand Docker Orchestration · Auto-Stop Inactive Containers · HTTP & WebSocket Interface
+🖥️ Wake Docker Containers · Auto-Stop Inactive Containers · HTTP & WebSocket Interface
 </p>
 
 <div align="center">
