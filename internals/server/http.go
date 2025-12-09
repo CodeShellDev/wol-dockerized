@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"text/template"
 	"time"
 
 	"github.com/codeshelldev/gotl/pkg/logger"
@@ -108,7 +109,10 @@ func activityHandler(w http.ResponseWriter, req *http.Request) {
 		"PATH": URL.Path,
 	}
 
-	query, err := templating.RenderTemplate("query", config.ENV.QUERY_PATTERN, variables)
+	templt := templating.CreateTemplateWithFunc("query", template.FuncMap{})
+	templt.Delims("{", "}")
+	
+	query, err := templating.ParseTemplate(templt, config.ENV.QUERY_PATTERN, variables)
 
 	if err != nil {
 		logger.Error("Error building query: ", err.Error())
