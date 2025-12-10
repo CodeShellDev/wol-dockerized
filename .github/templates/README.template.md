@@ -97,17 +97,20 @@ Example `docker-compose` configuration for the container:
 {{{ #://examples/jellyfin.docker-compose.yaml }}}
 ```
 
-**WoL Dockerized** will respond with a `client_id`, which can be used to establish a **WebSocket connection** at:
+## WebSocket Updates
+
+The `/wake` endpoint returns a `client_id`.  
+Use it to open a WebSocket connection:
 
 ```
 ws://wol-dockerized:7777/ws
 ```
 
-The WebSocket sends updates for each step of the process. The response contains:
+The WebSocket sends structured updates during the startup sequence:
 
-- `success`: `true` if the process finished successfully.
-- `error`: `true` if the process failed.
-- `message`: descriptive information about what happened.
+- `success`: `true` when the process completes
+- `error`: `true` if startup fails
+- `message`: descriptive status or error details
 
 ## Contributing
 
