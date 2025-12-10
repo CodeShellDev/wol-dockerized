@@ -25,6 +25,8 @@ func main() {
 
 	config.Log()
 
+	docker.InitClient()
+
 	addr := "0.0.0.0:" + config.ENV.PORT
 
 	srv := &http.Server{
