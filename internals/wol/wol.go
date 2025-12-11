@@ -141,6 +141,8 @@ func updateContainers() bool {
 
 	logger.Dev("Found ", len(queries), " unique queries")
 
+	logger.Dev("Found queries: ", queries)
+
 	containerQueryMutex.Lock()
 	containerQueries = queries
 	containerQueryMutex.Unlock()
