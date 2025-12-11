@@ -50,7 +50,6 @@ func doActivityCheck(threshold int) {
 	for query, lastTime := range lastActivities {
 		if currentTime - lastTime > threshold64 {
 			logger.Info("Containers with ", query, " have been flagged for Inactivity")
-			logger.Debug("Stopping Containers with ", query)
 
 			ids := containerIDs[query]
 			resetLastActivity(query)
@@ -59,8 +58,10 @@ func doActivityCheck(threshold int) {
 				continue
 			}
 
+			logger.Debug("Stopping Containers with ", query)
+
 			for _, id := range ids {
-				if getLabel(id, WOL_AUTOSTOP) == "true" {
+				if strings.ToLower(getLabel(id, WOL_AUTOSTOP)) != "false" {
 					_, err := docker.StopContainer(id, client.ContainerStopOptions{})
 
 					if err != nil {
