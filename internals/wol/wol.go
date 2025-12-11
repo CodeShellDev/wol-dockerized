@@ -75,6 +75,8 @@ func doActivityCheck(threshold int) {
 func WakeContainers(query string) error {
 	query = strings.TrimSpace(query)
 
+	logger.Dev("Waking container with ", query)
+
 	containerQueryMutex.RLock()
 	containers, exists := containerQueries[query]
 	containerQueryMutex.RUnlock()
