@@ -48,7 +48,11 @@ func doActivityCheck(threshold int) {
 	containerQueryMutex.RUnlock()
 
 	for query, lastTime := range lastActivities {
-		if currentTime - lastTime > threshold64 {
+		timePassed := currentTime - lastTime
+
+		logger.Dev("Last activity for ", query, " ", timePassed, "s ago")
+
+		if timePassed > threshold64 {
 			logger.Info("Containers with ", query, " have been flagged for inactivity")
 
 			ids := containerIDs[query]
