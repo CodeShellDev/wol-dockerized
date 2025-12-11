@@ -68,7 +68,7 @@ func wakeHandler(w http.ResponseWriter, req *http.Request) {
 
 	if err != nil {
 		logger.Error("Could not start container with ", body.Query, ": ", err.Error())
-		
+
 		sendToClient(client, map[string]any{
 			"success": false,
 			"error": true,
@@ -81,8 +81,8 @@ func wakeHandler(w http.ResponseWriter, req *http.Request) {
 
 	sendToClient(client, map[string]any{
 		"success": true,
-		"error": true,
-		"message": "Started containers",
+		"error": false,
+		"message": "Started containers.",
 	})
 
 	closeClient(client)
