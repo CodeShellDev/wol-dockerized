@@ -141,8 +141,6 @@ func updateContainers() bool {
 
 	logger.Dev("Found ", len(queries), " unique queries")
 
-	logger.Dev("Found queries: ", queries)
-
 	containerQueryMutex.Lock()
 	containerQueries = queries
 	containerQueryMutex.Unlock()
@@ -200,6 +198,7 @@ func getEnabledContainers() ([]container.Summary, error) {
 	filters.Add("label", "wol.enable=true")
 
 	return docker.GetContainers(client.ContainerListOptions{
+		All:     true,
 		Filters: filters,
 	})
 }
