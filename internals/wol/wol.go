@@ -93,7 +93,12 @@ func WakeContainers(query string) error {
 	logger.Debug("Found ", len(containers), " with query ", query)
 
 	for _, containerID := range containers {
-		logger.Info("Starting container ", containerID, " with ", query)
+		if logger.IsDebug() {
+			logger.Debug("Starting container ", containerID, " with ", query)
+		} else {
+			logger.Info("Starting container with ", query)
+		}
+
 		_, err := docker.StartContainer(containerID, client.ContainerStartOptions{})
 
 		if err != nil {
