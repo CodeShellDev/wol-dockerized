@@ -10,7 +10,7 @@ import (
 	"github.com/codeshelldev/wol-dockerized/internals/server"
 	"github.com/codeshelldev/wol-dockerized/internals/wol"
 )
-
+//s
 func main() {
 	config.Load()
 
