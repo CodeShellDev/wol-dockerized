@@ -102,6 +102,8 @@ func activityHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+	logger.Debug("Activity on ", urlStr, "detected")
+
 	variables := map[string]string{
 		"HOSTNAME": URL.Hostname(),
 		"HOST": URL.Host,

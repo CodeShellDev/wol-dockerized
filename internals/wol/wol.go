@@ -28,7 +28,7 @@ func OnActivity(query string) {
 }
 
 func Monitor(threshold int) {
-	logger.Dev("Performing activity check")
+	logger.Debug("Performing activity check")
 	if updateContainers() {
 		doActivityCheck(threshold)
 	}
@@ -49,25 +49,22 @@ func doActivityCheck(threshold int) {
 
 	for query, lastTime := range lastActivities {
 		if currentTime - lastTime > threshold64 {
-			logger.Info("Containers with ", query, " have been flagged for Inactivity")
+			logger.Info("Containers with ", query, " have been flagged for inactivity")
 
 			ids := containerIDs[query]
-			resetLastActivity(query)
+			removeLastActivity(query)
 
 			if len(ids) <= 0 {
 				continue
 			}
 
-			logger.Debug("Stopping Containers with ", query)
+			logger.Debug("Stopping containers with ", query)
 
 			for _, id := range ids {
 				autostop := getLabel(id, WOL_AUTOSTOP)
 
-				if strings.TrimSpace(autostop) == "" {
-					continue
-				}
-
 				if strings.ToLower(autostop) != "false" {
+					logger.Dev("Stopping container ", id)
 					_, err := docker.StopContainer(id, client.ContainerStopOptions{})
 
 					if err != nil {
@@ -96,6 +93,7 @@ func WakeContainers(query string) error {
 	logger.Debug("Found ", len(containers), " with query ", query)
 
 	for _, containerID := range containers {
+		logger.Info("Starting container ", containerID, " with ", query)
 		_, err := docker.StartContainer(containerID, client.ContainerStartOptions{})
 
 		if err != nil {
@@ -187,6 +185,12 @@ func getContainerQueries() (map[string][]string, error) {
 func resetLastActivity(query string) {
 	queryLastActivityMutex.Lock()
 	queryLastActivity[query] = time.Now().Unix()
+	queryLastActivityMutex.Unlock()
+}
+
+func removeLastActivity(query string) {
+	queryLastActivityMutex.Lock()
+	delete(queryLastActivity, query)
 	queryLastActivityMutex.Unlock()
 }
 
