@@ -11,6 +11,7 @@ import (
 	"github.com/codeshelldev/wol-dockerized/internals/wol"
 )
 
+//s
 func main() {
 	config.Load()
 
@@ -35,11 +36,13 @@ func main() {
 	}
 
 	go func() {
-		ticker := time.NewTicker(time.Duration(config.ENV.MONITOR_INTERVAL) * time.Second)
+   		wol.Monitor(config.ENV.INACTIVITY_THRESHOLD)
+
+		ticker := time.NewTicker(time.Duration(config.ENV.INACTIVITY_THRESHOLD) * time.Second)
 		defer ticker.Stop()
 
 		for range ticker.C {
-			wol.Monitor(config.ENV.MONITOR_INTERVAL)
+			wol.Monitor(config.ENV.INACTIVITY_THRESHOLD)
 		}
 	}()
 

@@ -28,7 +28,7 @@ func OnActivity(query string) {
 }
 
 func Monitor(threshold int) {
-	logger.Dev("Performing activity check")
+	logger.Debug("Performing activity check")
 	if updateContainers() {
 		doActivityCheck(threshold)
 	}
@@ -48,19 +48,27 @@ func doActivityCheck(threshold int) {
 	containerQueryMutex.RUnlock()
 
 	for query, lastTime := range lastActivities {
-		if currentTime - lastTime > threshold64 {
-			logger.Info("Containers with ", query, " have been flagged for Inactivity")
-			logger.Debug("Stopping Containers with ", query)
+		timePassed := currentTime - lastTime
+
+		logger.Dev("Last activity for ", query, " ", timePassed, "s ago")
+
+		if timePassed > threshold64 {
+			logger.Info("Containers with ", query, " have been flagged for inactivity")
 
 			ids := containerIDs[query]
-			resetLastActivity(query)
+			removeLastActivity(query)
 
 			if len(ids) <= 0 {
 				continue
 			}
 
+			logger.Debug("Stopping containers with ", query)
+
 			for _, id := range ids {
-				if getLabel(id, WOL_AUTOSTOP) == "true" {
+				autostop := getLabel(id, WOL_AUTOSTOP)
+
+				if strings.ToLower(autostop) != "false" {
+					logger.Dev("Stopping container ", id)
 					_, err := docker.StopContainer(id, client.ContainerStopOptions{})
 
 					if err != nil {
@@ -75,7 +83,10 @@ func doActivityCheck(threshold int) {
 func WakeContainers(query string) error {
 	query = strings.TrimSpace(query)
 
+	logger.Dev("Waking container with ", query)
+
 	containerQueryMutex.RLock()
+	logger.Dev("Queries: ", containerQueries)
 	containers, exists := containerQueries[query]
 	containerQueryMutex.RUnlock()
 
@@ -86,6 +97,12 @@ func WakeContainers(query string) error {
 	logger.Debug("Found ", len(containers), " with query ", query)
 
 	for _, containerID := range containers {
+		if logger.IsDebug() {
+			logger.Debug("Starting container ", containerID, " with ", query)
+		} else {
+			logger.Info("Starting container with ", query)
+		}
+
 		_, err := docker.StartContainer(containerID, client.ContainerStartOptions{})
 
 		if err != nil {
@@ -180,6 +197,12 @@ func resetLastActivity(query string) {
 	queryLastActivityMutex.Unlock()
 }
 
+func removeLastActivity(query string) {
+	queryLastActivityMutex.Lock()
+	delete(queryLastActivity, query)
+	queryLastActivityMutex.Unlock()
+}
+
 func getLabel(id, label string) string {
 	container, err := docker.GetContainer(id, client.ContainerInspectOptions{})
 
@@ -195,6 +218,7 @@ func getEnabledContainers() ([]container.Summary, error) {
 	filters.Add("label", "wol.enable=true")
 
 	return docker.GetContainers(client.ContainerListOptions{
+		All:     true,
 		Filters: filters,
 	})
 }

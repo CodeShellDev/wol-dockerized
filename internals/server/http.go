@@ -5,11 +5,10 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
-	"text/template"
+	"strings"
 	"time"
 
 	"github.com/codeshelldev/gotl/pkg/logger"
-	"github.com/codeshelldev/gotl/pkg/templating"
 	"github.com/codeshelldev/wol-dockerized/internals/config"
 	"github.com/codeshelldev/wol-dockerized/internals/wol"
 )
@@ -68,10 +67,12 @@ func wakeHandler(w http.ResponseWriter, req *http.Request) {
 	err = wol.WakeContainers(body.Query)
 
 	if err != nil {
+		logger.Error("Could not start container with ", body.Query, ": ", err.Error())
+
 		sendToClient(client, map[string]any{
 			"success": false,
 			"error": true,
-			"message": "Could not start containers",
+			"message": err.Error(),
 		})
 
 		closeClient(client)
@@ -80,8 +81,8 @@ func wakeHandler(w http.ResponseWriter, req *http.Request) {
 
 	sendToClient(client, map[string]any{
 		"success": true,
-		"error": true,
-		"message": "Started containers",
+		"error": false,
+		"message": "Started containers.",
 	})
 
 	closeClient(client)
@@ -101,25 +102,28 @@ func activityHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	variables := map[string]any{
+	logger.Debug("Activity on ", urlStr, "detected")
+
+	variables := map[string]string{
 		"HOSTNAME": URL.Hostname(),
 		"HOST": URL.Host,
-		"PORT": URL.Port,
+		"PORT": URL.Port(),
 		"PROTOCOL": URL.Scheme,
 		"PATH": URL.Path,
 	}
 
-	templt := templating.CreateTemplateWithFunc("query", template.FuncMap{})
-	templt.Delims("{", "}")
-	
-	query, err := templating.ParseTemplate(templt, config.ENV.QUERY_PATTERN, variables)
-
-	if err != nil {
-		logger.Error("Error building query: ", err.Error())
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-	}
+	query := buildQuery(config.ENV.QUERY_PATTERN, variables)
 
 	wol.OnActivity(query)
 
 	w.WriteHeader(http.StatusOK)
+}
+
+func buildQuery(pattern string, context map[string]string) string {
+	result := pattern
+	for k, v := range context {
+		placeholder := "{" + k + "}"
+		result = strings.ReplaceAll(result, placeholder, v)
+	}
+	return result
 }

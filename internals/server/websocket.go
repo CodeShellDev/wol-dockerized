@@ -14,10 +14,10 @@ var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool { return true },
 }
 
-var waiters = make(map[string]chan *websocket.Conn)
+var waiters = map[string]chan *websocket.Conn{}
 var waitersMutex = &sync.Mutex{}
 
-var clients = make(map[string]*websocket.Conn)
+var clients = map[string]*websocket.Conn{}
 var clientsMutex = &sync.Mutex{}
 
 func websocketHandler(w http.ResponseWriter, req *http.Request) {
