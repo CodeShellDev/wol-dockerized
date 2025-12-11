@@ -61,7 +61,13 @@ func doActivityCheck(threshold int) {
 			logger.Debug("Stopping Containers with ", query)
 
 			for _, id := range ids {
-				if strings.ToLower(getLabel(id, WOL_AUTOSTOP)) != "false" {
+				autostop := getLabel(id, WOL_AUTOSTOP)
+
+				if strings.TrimSpace(autostop) == "" {
+					continue
+				}
+
+				if strings.ToLower(autostop) != "false" {
 					_, err := docker.StopContainer(id, client.ContainerStopOptions{})
 
 					if err != nil {
