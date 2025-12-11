@@ -70,7 +70,7 @@ func wakeHandler(w http.ResponseWriter, req *http.Request) {
 		sendToClient(client, map[string]any{
 			"success": false,
 			"error": true,
-			"message": "Could not start containers",
+			"message": err.Error(),
 		})
 
 		closeClient(client)

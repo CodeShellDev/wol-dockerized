@@ -78,6 +78,7 @@ func WakeContainers(query string) error {
 	logger.Dev("Waking container with ", query)
 
 	containerQueryMutex.RLock()
+	logger.Dev("Queries: ", containerQueries)
 	containers, exists := containerQueries[query]
 	containerQueryMutex.RUnlock()
 
