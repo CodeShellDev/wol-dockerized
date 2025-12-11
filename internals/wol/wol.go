@@ -28,6 +28,7 @@ func OnActivity(query string) {
 }
 
 func Monitor(threshold int) {
+	logger.Dev("Performing activity check")
 	if updateContainers() {
 		doActivityCheck(threshold)
 	}
@@ -134,6 +135,8 @@ func updateContainers() bool {
 		logger.Error("Error getting container queries: ", err.Error())
 		return false
 	}
+
+	logger.Dev("Found ", len(queries), " unique queries")
 
 	containerQueryMutex.Lock()
 	containerQueries = queries
