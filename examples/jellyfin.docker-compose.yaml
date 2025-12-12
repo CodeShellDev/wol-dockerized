@@ -4,4 +4,5 @@ services:
     labels:
       - wol.enable=true
       - wol.query=jellyfin.mydomain.com
-      - wol.autostop=true
+      # To disable automatic stopping
+      # - wol.autostop=false
