@@ -125,7 +125,10 @@ This lets the program resolve the intended query even on the `/activity` endpoin
 
 Example:
 
-`{HOSTNAME}{HOSTNAME}` => `domain.comdomain.com`
+```mermaid
+graph LR
+    A["{HOSTNAME}{HOSTNAME}"] --> B["domain.comdomain.com"]
+```
 
 ### `MONITOR_INTERVAL`
 
