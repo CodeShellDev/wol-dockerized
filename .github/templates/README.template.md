@@ -125,9 +125,7 @@ This lets the program resolve the intended query even on the `/activity` endpoin
 
 Example:
 
-```
-{HOSTNAME}{HOSTNAME} => domain.comdomain.com
-```
+`{HOSTNAME}{HOSTNAME}` => `domain.comdomain.com`
 
 ### `MONITOR_INTERVAL`
 
