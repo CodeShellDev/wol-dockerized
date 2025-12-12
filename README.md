@@ -141,12 +141,13 @@ These components are made available as variables:
 
 This lets the program resolve the intended query even on the `/activity` endpoint, which only receives the actual URL.
 
-Example:
+<details>
+  <summary>Example</summary>
 
-```mermaid
-graph LR
-    A["{HOSTNAME}{HOSTNAME}"] --> B["domain.comdomain.com"]
-```
+`QUERY_PATTERN`=`{HOSTNAME}{HOSTNAME}`
+Result: `domain.comdomain.com`
+
+</details>
 
 ### `MONITOR_INTERVAL`
 
