@@ -41,10 +41,10 @@
 
 ## Features
 
-- Start Docker containers via simple HTTP requests.
-- Automatically stop inactive containers.
+- Start Docker containers via **simple HTTP requests**.
+- Automatically **stop inactive containers**.
 - Integrates with [WoL-Redirect](https://github.com/codeshelldev/wol-redirect) for a graphical interface.
-- Provides real-time process updates via WebSocket.
+- Provides real-time process updates via **WebSocket**.
 
 ## Installation
 
@@ -60,8 +60,6 @@
 docker compose up -d
 ```
 
-3. Optionally, combine with [WoL-Redirect](https://github.com/codeshelldev/wol-redirect) for a web interface.
-
 ## Setup
 
 ### Auto Stop
@@ -75,6 +73,9 @@ http://wol-dockerized:7777/activity
 > [!NOTE]
 > This is currently not straightforward. You cannot just redirect to `/activity`. You need to use a _forward auth_ middleware.  
 > Currently, `wol-dockerized` will respond with `200 OK`.
+
+> [!TIP]
+> By default auto stop is enabled to disable this feature add `wol.autostop=false` to the labels.
 
 ### Traefik Integration
 
@@ -117,7 +118,7 @@ The WebSocket sends structured updates during the startup sequence:
 ### `QUERY_PATTERN`
 
 Matches an incoming request to the correct container(s) by using components extracted from the real URL.
-These components are made available as variables:
+These components are made available as **variables**:
 
 - `HOSTNAME`, `HOST`, `PORT`, `PROTOCOL`, `PATH`
 
@@ -132,12 +133,12 @@ The query pattern `{HOSTNAME}{HOSTNAME}` results in `sub.domain.comsub.domain.co
 
 ### `MONITOR_INTERVAL`
 
-Interval in seconds for inactivity monitoring.
+Interval in seconds for **inactivity monitoring**.
 
 ### `INACTIVITY_THRESHOLD`
 
-Duration (in seconds) a container can remain idle without receiving activity reports.
-If no requests are forwarded to the `/activity` endpoint for longer than this threshold, the container is marked as idle and may be stopped automatically.
+Duration (in seconds) a container can remain **idle** without receiving activity reports.
+If no requests are forwarded to the `/activity` endpoint for longer than this threshold, the container is marked as idle and **may be stopped automatically**.
 
 ## Contributing
 
