@@ -123,13 +123,12 @@ These components are made available as variables:
 
 This lets the program resolve the intended query even on the `/activity` endpoint, which only receives the actual URL.
 
-<details>
-  <summary>Example</summary>
+> [!NOTE]
+> Use `{}` to declare the use of a variable.
 
-`QUERY_PATTERN`=`{HOSTNAME}{HOSTNAME}`
-Result: `domain.comdomain.com`
+Example:
 
-</details>
+The query pattern `{HOSTNAME}{HOSTNAME}` results in `sub.domain.comsub.domain.com
 
 ### `MONITOR_INTERVAL`
 
