@@ -130,6 +130,32 @@ The WebSocket sends structured updates during the startup sequence:
 - `error`: `true` if startup fails
 - `message`: descriptive status or error details
 
+## Configuration
+
+### `QUERY_PATTERN`
+
+Matches an incoming request to the correct container(s) by using components extracted from the real URL.
+These components are made available as variables:
+
+- `HOSTNAME`, `HOST`, `PORT`, `PROTOCOL`, `PATH`
+
+This lets the program resolve the intended query even on the `/activity` endpoint, which only receives the actual URL.
+
+Example:
+
+```
+{HOSTNAME}{HOSTNAME} => domain.comdomain.com
+```
+
+### `MONITOR_INTERVAL`
+
+Interval in seconds for inactivity monitoring.
+
+### `INACTIVITY_THRESHOLD`
+
+Duration (in seconds) a container can remain idle without receiving activity reports.
+If no requests are forwarded to the `/activity` endpoint for longer than this threshold, the container is marked as idle and may be stopped automatically.
+
 ## Contributing
 
 Found a bug or have ideas for new features?  
