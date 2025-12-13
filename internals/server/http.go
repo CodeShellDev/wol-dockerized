@@ -82,7 +82,7 @@ func wakeHandler(w http.ResponseWriter, req *http.Request) {
 	sendToClient(client, map[string]any{
 		"success": true,
 		"error": false,
-		"message": "Started containers.",
+		"message": "Started containers",
 	})
 
 	closeClient(client)
